@@ -1,0 +1,69 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml" 
+    xmlns:f="http://xmlns.jcp.org/jsf/core" 
+    xmlns:h="http://xmlns.jcp.org/jsf/html"
+    xmlns:ui="http://xmlns.jcp.org/jsf/facelets" 
+    xmlns:composite="http://xmlns.jcp.org/jsf/composite">
+
+    <ui:define name="metadata">
+        <f:metadata>
+            <f:event type="preRenderView" listener="#{metadataBean.loadMetadata}" />
+        </f:metadata>
+    </ui:define>
+
+    <composite:interface>
+    	<composite:attribute name="widget" type="io.goobi.viewer.model.cms.CMSSidebarElement" required="true" />
+    </composite:interface>
+
+	<composite:implementation>
+		<h:panelGroup rendered="#{(cc.attrs.widget.type == 'widgetCrowdsourcing' or cc.attrs.widget.type == null) and userBean.loggedIn and crowdsourcingBean.crowdsourcingEnabled}">
+			<div id="widgetCrowdsourcing" class="widget">
+				<h:form id="widgetCrowdsourcingForm">
+					<h:panelGroup rendered="#{cc.attrs.widget.widgetMode == 'STANDARD' or cc.attrs.widget.type == null}">
+						<h3>#{msgcs.crowdsourcing}</h3>
+						
+						<ul>
+							<h:panelGroup rendered="#{activeDocumentBean.viewManager.hasPages and activeDocumentBean.persistentIdentifier != ''}">
+								<li>
+									<h:outputLink value="#{navigationHelper.applicationUrl}crowd/#{activeDocumentBean.persistentIdentifier}/">
+										#{msgcs.crowdsourcing_contribute}
+									</h:outputLink>
+								</li>
+							</h:panelGroup>
+							<li class="#{navigationHelper.currentPage == 'myactivity'?'active':''}">
+								<h:outputLink value="#{navigationHelper.applicationUrl}myactivity/">
+									<h:outputText value="#{msgcs.crowdsourcing_myActivity}" />
+								</h:outputLink>
+							</li>
+						</ul>
+					</h:panelGroup>
+					
+					<h:panelGroup rendered="#{cc.attrs.widget.widgetMode == 'FOLDOUT'}">
+						<h3>
+							<a href="#csCollapse" data-toggle="collapse" aria-expanded="false" aria-controls="csCollapse">
+								#{msgcs.crowdsourcing}
+								<span class="glyphicon glyphicon-arrow-down"></span>
+							</a>
+						</h3>
+						
+						<div id="csCollapse" class="collapse">
+							<ul>
+								<h:panelGroup rendered="#{activeDocumentBean.viewManager.hasPages and activeDocumentBean.persistentIdentifier != ''}">
+									<li>
+										<h:outputLink value="#{navigationHelper.applicationUrl}crowd/#{activeDocumentBean.persistentIdentifier}/">
+											#{msgcs.crowdsourcing_contribute}
+										</h:outputLink>
+									</li>
+								</h:panelGroup>
+								<li class="#{navigationHelper.currentPage == 'myactivity'?'active':''}">
+									<h:outputLink value="#{navigationHelper.applicationUrl}myactivity/">
+										<h:outputText value="#{msgcs.crowdsourcing_myActivity}" />
+									</h:outputLink>
+								</li>
+							</ul>
+						</div>
+					</h:panelGroup>
+				</h:form>
+			</div>
+		</h:panelGroup>
+	</composite:implementation>
+</ui:composition>
