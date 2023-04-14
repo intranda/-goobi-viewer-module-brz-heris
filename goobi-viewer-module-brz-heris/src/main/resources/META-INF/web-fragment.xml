@@ -1,7 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<web-fragment id="WebFragment_ID" version="3.1" xmlns="http://xmlns.jcp.org/xml/ns/javaee"
+<web-fragment id="WebFragment_ID" version="4.0"
+    xmlns="http://xmlns.jcp.org/xml/ns/javaee"
     xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-    xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/javaee http://xmlns.jcp.org/xml/ns/javaee/web-fragment_3_1.xsd">
+    xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/javaee http://xmlns.jcp.org/xml/ns/javaee/web-fragment_4_0.xsd">
     <display-name>goobi-viewer-module-skeleton</display-name> 
     <name>goobi_viewer_module_skeleton</name> 
     <listener>
