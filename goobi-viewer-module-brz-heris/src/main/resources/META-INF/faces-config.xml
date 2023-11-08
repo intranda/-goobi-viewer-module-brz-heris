@@ -5,8 +5,8 @@
 
 	<application>
         <resource-bundle>
-            <base-name>io.goobi.viewer.modules.skeleton.messages.ModuleResourceBundle</base-name>
-            <var>msgskeleton</var>
+            <base-name>io.goobi.viewer.modules.heris.messages.ModuleResourceBundle</base-name>
+            <var>msgheris</var>
         </resource-bundle>
 	</application>
 	

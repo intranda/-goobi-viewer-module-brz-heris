@@ -25,8 +25,6 @@ import org.apache.logging.log4j.Logger;
 import org.apache.solr.common.SolrDocument;
 
 import io.goobi.viewer.controller.DataManager;
-import io.goobi.viewer.dao.IModuleDAO;
-import io.goobi.viewer.dao.impl.ModuleJPADAO;
 import io.goobi.viewer.exceptions.DAOException;
 import io.goobi.viewer.exceptions.ModuleMissingException;
 import io.goobi.viewer.model.security.user.User;
@@ -37,11 +35,10 @@ public class HerisModule implements IModule {
 
     private static final Logger logger = LogManager.getLogger(HerisModule.class);
 
-    public static final String ID = "viewer-module-brz-heris";
+    public static final String ID = "viewer-module-heris";
     private static final String NAME = "Goobi Viewer module BRZ HERIS";
 
     private ModuleConfiguration configuration;
-    private IModuleDAO dao;
 
     /**
      * Convenience method for retrieving the properly cast instance of this module registered in the core.
@@ -90,58 +87,31 @@ public class HerisModule implements IModule {
         this.configuration = configuration;
     }
 
-    /**
-     * @return the dao
-     * @throws DAOException
-     * @throws ModuleMissingException
-     */
-    public IModuleDAO getDao() throws DAOException {
-        if (dao == null) {
-            dao = new ModuleJPADAO();
-        }
-        return dao;
-    }
-
-    /**
-     * @param dao the dao to set
-     */
-    public void setDao(IModuleDAO dao) {
-        this.dao = dao;
-    }
-
     @Override
     public Map<String, String> getCmsMenuContributions() {
         Map<String, String> map = new HashMap<>();
-
         // TODO Add CMS menu contributions here
-        map.put("skeleton_overview", "skeleton/");
-
         return map;
     }
 
     @Override
     public List<String> getSidebarContributions() {
         List<String> ret = new ArrayList<>();
-
-        // TODO Add paths to your sidebar widgets here
-        ret.add("resources/components/widgets/widget_skeleton.xhtml");
-
+        ret.add("resources/components/widgets/widget_heris_links.xhtml");
         return ret;
     }
-    
+
     @Override
     public List<String> getWidgetUsageContributions() {
+        List<String> ret = new ArrayList<>();
         // TODO Add "usage" widget contributions here
-        return null;
+        return ret;
     }
 
     @Override
     public List<String> getAdminContributions() {
         List<String> ret = new ArrayList<>();
-
         // TODO Add paths to your admin backend contributions here
-        ret.add("resources/components/widgets/widget_admin_skeleton.xhtml");
-
         return ret;
     }
 

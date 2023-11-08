@@ -1,0 +1,96 @@
+/**
+ * This file is part of the Goobi viewer - a content presentation and management application for digitized objects.
+ *
+ * Visit these websites for more information.
+ *          - http://www.intranda.com
+ *          - http://digiverso.com
+ *
+ * This program is free software; you can redistribute it and/or modify it under the terms of the GNU General Public License as published by the Free
+ * Software Foundation; either version 2 of the License, or (at your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or
+ * FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License along with this program. If not, see <http://www.gnu.org/licenses/>.
+ */
+package io.goobi.viewer.managedbeans;
+
+import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
+
+import javax.annotation.PostConstruct;
+import javax.inject.Inject;
+import javax.inject.Named;
+
+import org.apache.commons.lang.StringUtils;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+
+import io.goobi.viewer.controller.DataManager;
+import io.goobi.viewer.exceptions.ModuleMissingException;
+import io.goobi.viewer.managedbeans.utils.BeanUtils;
+import io.goobi.viewer.model.viewer.StringPair;
+import io.goobi.viewer.modules.HerisModule;
+import io.goobi.viewer.modules.heris.ModuleConfiguration;
+
+@Named
+public class HerisBean implements Serializable {
+
+    private static final long serialVersionUID = 3963436132111065936L;
+
+    private static final Logger logger = LogManager.getLogger(HerisBean.class);
+
+    @Inject
+    private ActiveDocumentBean activeDocumentBean;
+
+    @Inject
+    private UserBean userBean;
+
+    /** Empty constructor. */
+    public HerisBean() {
+        // Empty
+    }
+
+    @PostConstruct
+    public void init() {
+    }
+
+    public boolean isModuleEnabled() throws ModuleMissingException {
+        return HerisModule.getInstance().getConfiguration().isModuleEnabled();
+    }
+
+    public List<StringPair> getExternalLinks() {
+        if (!userBean.isLoggedIn() || !activeDocumentBean.isRecordLoaded()) {
+            return Collections.emptyList();
+        }
+
+        // TODO get PORTAL-SCHEME + PORTAL-AUTHORITY from HTTP session
+        String scheme = (String) BeanUtils.getSession().getAttribute("PORTAL-SCHEME");
+        String authoritah = (String) BeanUtils.getSession().getAttribute("PORTAL-AUTHORITY");
+        logger.trace("PORTAL-SCHEME: {}", scheme);
+        logger.trace("PORTAL-AUTHORITY: {}", authoritah);
+
+        // TODO use appropriate identifier in URL from configured Solr 
+        List<StringPair> ret = new ArrayList<>();
+        if (StringUtils.isNotEmpty(scheme) && StringUtils.isNotEmpty(authoritah)) {
+            try {
+                String indexField = ((ModuleConfiguration) DataManager.getInstance().getModule(HerisModule.ID).getConfiguration())
+                        .getIndexFieldForHost(authoritah);
+                if (StringUtils.isNotEmpty(indexField)) {
+                    String identifier = activeDocumentBean.getViewManager().getTopStructElement().getMetadataValue(indexField);
+                    if (StringUtils.isNotEmpty(identifier)) {
+                        String url = scheme + "://" + authoritah + "/" + identifier;
+                        ret.add(new StringPair(url, url));
+                    }
+                }
+
+            } catch (ModuleMissingException e) {
+                logger.error(e.getMessage());
+            }
+        }
+
+        return ret;
+    }
+}

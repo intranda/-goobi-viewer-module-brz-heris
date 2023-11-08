@@ -19,6 +19,7 @@ import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.apache.commons.configuration2.HierarchicalConfiguration;
 import org.apache.commons.configuration2.XMLConfiguration;
 import org.apache.commons.configuration2.builder.ConfigurationBuilderEvent;
 import org.apache.commons.configuration2.builder.ReloadingFileBasedConfigurationBuilder;
@@ -26,6 +27,7 @@ import org.apache.commons.configuration2.builder.fluent.Parameters;
 import org.apache.commons.configuration2.convert.DefaultListDelimiterHandler;
 import org.apache.commons.configuration2.event.Event;
 import org.apache.commons.configuration2.event.EventListener;
+import org.apache.commons.configuration2.tree.ImmutableNode;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -86,5 +88,24 @@ public final class ModuleConfiguration extends AbstractConfiguration {
      */
     public List<String> getGuiContributions(String type) {
         return getLocalList("guiContributions." + type + ".url", new ArrayList<>());
+    }
+
+    /**
+     * 
+     * @param host
+     * @return
+     * @should return correct value
+     */
+    public String getIndexFieldForHost(String host) {
+        List<HierarchicalConfiguration<ImmutableNode>> fieldList = getLocalConfigurationsAt("identifierFields.field");
+        if (fieldList != null) {
+            for (HierarchicalConfiguration<ImmutableNode> subElement : fieldList) {
+                if (subElement.getString("[@host]").equals(host)) {
+                    return subElement.getString(".", "");
+                }
+            }
+        }
+
+        return "";
     }
 }

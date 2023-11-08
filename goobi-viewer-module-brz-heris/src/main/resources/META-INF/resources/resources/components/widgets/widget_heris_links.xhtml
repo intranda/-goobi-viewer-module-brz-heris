@@ -6,6 +6,7 @@
 
     <ui:define name="metadata">
         <f:metadata>
+            <f:event type="preRenderView" listener="#{metadataBean.loadMetadata}" />
         </f:metadata>
     </ui:define>
 
@@ -13,13 +14,12 @@
     	<composite:attribute name="widget" type="io.goobi.viewer.model.cms.CMSSidebarElement" required="true" />
     </composite:interface>
 
-	<composite:implementation>
-        <h:panelGroup rendered="#{skeletonBean.moduleEnabled}">
-            <li class="#{navigationHelper.currentPage == 'adminUserActivity' ? 'active' : ''}">
-                <h:commandLink action="pretty:adminUserActivity">
-                    <h:outputText value="#{msgcs.crowdsourcing_userActivity}" />
-                </h:commandLink>
-            </li>
-        </h:panelGroup>
+    <composite:implementation>
+        <h3>##{msgheris.helloworld}</h3>
+        
+        <ui:repeat var="link" value="#{herisBean.externalLinks}">
+            <a href="#{link.one}" target="_blank">#{link.two}</a>
+        </ui:repeat>   
+		
 	</composite:implementation>
 </ui:composition>
