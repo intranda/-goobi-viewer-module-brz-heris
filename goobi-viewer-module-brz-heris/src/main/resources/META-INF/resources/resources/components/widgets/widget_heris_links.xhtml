@@ -11,15 +11,18 @@
     </ui:define>
 
     <composite:interface>
-    	<composite:attribute name="widget" type="io.goobi.viewer.model.cms.CMSSidebarElement" required="true" />
+        <composite:attribute name="widget" type="io.goobi.viewer.model.cms.CMSSidebarElement" required="true" />
     </composite:interface>
 
     <composite:implementation>
-        <h3>##{msgheris.helloworld}</h3>
-        
-        <ui:repeat var="link" value="#{herisBean.externalLinks}">
-            <a href="#{link.one}" target="_blank">#{link.two}</a>
-        </ui:repeat>   
+        <h:panelGroup rendered="#{activeDocumentBean.recordLoaded}">
+            <div id="widgetHerisLinks" class="widget">
+                <h3>#{msgheris.helloworld}</h3>    
+                <ui:repeat var="link" value="#{herisBean.externalLinks}">
+                    <a href="#{link.one}" target="_blank">#{link.two}</a>
+                </ui:repeat>  
+            </div>
+        </h:panelGroup> 
 		
 	</composite:implementation>
 </ui:composition>

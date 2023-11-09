@@ -4,13 +4,13 @@
 		http://maven.apache.org/xsd/maven-4.0.0.xsd">
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>io.goobi.viewer.module</groupId>
-	<artifactId>module-brz-heris</artifactId>
+	<artifactId>module-heris</artifactId>
 	<version>23.11-SNAPSHOT</version>
 	<packaging>jar</packaging>
 
 
 	<name>Goobi viewer - Module Skeleton</name>
-	<url>https://github.com/intranda/goobi-viewer-module-brz-heris</url>
+	<url>https://github.com/intranda/goobi-viewer-module-heris</url>
 
 
 	<properties>
@@ -218,7 +218,7 @@
                     <archive>
                         <addMavenDescriptor>false</addMavenDescriptor>
                         <manifestEntries>
-                            <ApplicationName>goobi-viewer-module-brz-heris</ApplicationName>
+                            <ApplicationName>goobi-viewer-module-heris</ApplicationName>
                             <version>${project.version}</version>
                             <Implementation-Version>${buildNumber}</Implementation-Version>
                             <Implementation-Build-Date>${buildDate}</Implementation-Build-Date>

@@ -36,7 +36,7 @@ public class HerisModule implements IModule {
     private static final Logger logger = LogManager.getLogger(HerisModule.class);
 
     public static final String ID = "viewer-module-heris";
-    private static final String NAME = "Goobi Viewer module BRZ HERIS";
+    private static final String NAME = "Goobi Viewer module HERIS";
 
     private ModuleConfiguration configuration;
 

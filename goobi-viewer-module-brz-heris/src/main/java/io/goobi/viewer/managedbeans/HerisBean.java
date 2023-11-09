@@ -66,9 +66,16 @@ public class HerisBean implements Serializable {
             return Collections.emptyList();
         }
 
-        // TODO get PORTAL-SCHEME + PORTAL-AUTHORITY from HTTP session
-        String scheme = (String) BeanUtils.getSession().getAttribute("PORTAL-SCHEME");
-        String authoritah = (String) BeanUtils.getSession().getAttribute("PORTAL-AUTHORITY");
+        BeanUtils.getSession().setAttribute("PORTAL-SCHEME", "https");
+        BeanUtils.getSession().setAttribute("PORTAL-AUTHORITY", "goobi.io");
+
+        // TODO get PORTAL-SCHEME + PORTAL-AUTHORITY
+        //        String scheme = (String) BeanUtils.getSession().getAttribute("PORTAL-SCHEME");
+        //        String authoritah = (String) BeanUtils.getSession().getAttribute("PORTAL-AUTHORITY");
+
+        String scheme = BeanUtils.getRequest().getHeader("PORTAL-SCHEME");
+        String authoritah = BeanUtils.getRequest().getHeader("PORTAL-AUTHORITY");
+
         logger.trace("PORTAL-SCHEME: {}", scheme);
         logger.trace("PORTAL-AUTHORITY: {}", authoritah);
 
