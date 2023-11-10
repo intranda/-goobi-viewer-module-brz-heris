@@ -3,6 +3,6 @@
 	<enabled>true</enabled>
     
     <urlPatterns>
-        <pattern host="goobi.io" field="MD_FOO_ID">{SCHEME}://{HOST}/{ID}</pattern>
+        <pattern host="example.com" field="MD_FOO_ID">{SCHEME}://{HOST}/{ID}</pattern>
     </urlPatterns>
 </config>

@@ -97,7 +97,20 @@ public final class ModuleConfiguration extends AbstractConfiguration {
      * @should return correct value
      */
     public String getIndexFieldForHost(String host) {
-        List<HierarchicalConfiguration<ImmutableNode>> fieldList = getLocalConfigurationsAt("identifierFields.field");
+        List<HierarchicalConfiguration<ImmutableNode>> fieldList = getLocalConfigurationsAt("urlPatterns.pattern");
+        if (fieldList != null) {
+            for (HierarchicalConfiguration<ImmutableNode> subElement : fieldList) {
+                if (subElement.getString("[@host]").equals(host)) {
+                    return subElement.getString("[@field]", "");
+                }
+            }
+        }
+
+        return "";
+    }
+    
+    public String getUrlPatternForHost(String host) {
+        List<HierarchicalConfiguration<ImmutableNode>> fieldList = getLocalConfigurationsAt("urlPatterns.pattern");
         if (fieldList != null) {
             for (HierarchicalConfiguration<ImmutableNode> subElement : fieldList) {
                 if (subElement.getString("[@host]").equals(host)) {
