@@ -15,13 +15,16 @@
     </composite:interface>
 
     <composite:implementation>
-        <h:panelGroup rendered="#{userBean.loggedIn and activeDocumentBean.recordLoaded}">
-            <div id="widgetHerisLinks" class="widget">
-                <h3>#{msgheris.widgetTitle}</h3>    
+    
+        <h:panelGroup id="widgetHerisLinks" styleClass="widget" layout="block" rendered="#{userBean.loggedIn and activeDocumentBean.recordLoaded}">
+            <h2>#{msgheris.widgetTitle}</h2>
+            <ul>
                 <ui:repeat var="link" value="#{herisBean.externalLinks}">
-                    <a href="#{link.one}" target="_blank">#{link.two}</a>
+                    <li>
+                        <a href="#{link.one}" target="_blank">#{link.two}</a>
+                    </li>
                 </ui:repeat>  
-            </div>
+            </ul>
         </h:panelGroup> 
 		
 	</composite:implementation>
