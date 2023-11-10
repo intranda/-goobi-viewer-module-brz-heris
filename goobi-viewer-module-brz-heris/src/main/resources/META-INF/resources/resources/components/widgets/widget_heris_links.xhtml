@@ -15,9 +15,9 @@
     </composite:interface>
 
     <composite:implementation>
-        <h:panelGroup rendered="#{activeDocumentBean.recordLoaded}">
+        <h:panelGroup rendered="#{userBean.loggedIn and activeDocumentBean.recordLoaded}">
             <div id="widgetHerisLinks" class="widget">
-                <h3>#{msgheris.helloworld}</h3>    
+                <h3>#{msgheris.widgetTitle}</h3>    
                 <ui:repeat var="link" value="#{herisBean.externalLinks}">
                     <a href="#{link.one}" target="_blank">#{link.two}</a>
                 </ui:repeat>  
