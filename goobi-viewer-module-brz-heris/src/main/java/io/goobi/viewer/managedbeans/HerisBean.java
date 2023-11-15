@@ -21,8 +21,10 @@ import java.util.Collections;
 import java.util.List;
 
 import javax.annotation.PostConstruct;
+import javax.faces.context.FacesContext;
 import javax.inject.Inject;
 import javax.inject.Named;
+import javax.servlet.http.HttpServletRequest;
 
 import org.apache.commons.lang3.StringUtils;
 import org.apache.logging.log4j.LogManager;
@@ -30,7 +32,6 @@ import org.apache.logging.log4j.Logger;
 
 import io.goobi.viewer.controller.DataManager;
 import io.goobi.viewer.exceptions.ModuleMissingException;
-import io.goobi.viewer.managedbeans.utils.BeanUtils;
 import io.goobi.viewer.model.viewer.StringPair;
 import io.goobi.viewer.modules.HerisModule;
 import io.goobi.viewer.modules.heris.ModuleConfiguration;
@@ -82,8 +83,9 @@ public class HerisBean implements Serializable {
         }
 
         // Get PORTAL-SCHEME + PORTAL-AUTHORITY from HTTP header
-        String scheme = BeanUtils.getRequest().getHeader("PORTAL-SCHEME");
-        String host = BeanUtils.getRequest().getHeader("PORTAL-AUTHORITY");
+        HttpServletRequest request = (HttpServletRequest) FacesContext.getCurrentInstance().getExternalContext().getRequest();
+        String scheme = request.getHeader("PORTAL-SCHEME");
+        String host = request.getHeader("PORTAL-AUTHORITY");
         logger.trace("PORTAL-SCHEME: {}", scheme);
         logger.trace("PORTAL-AUTHORITY: {}", host);
 

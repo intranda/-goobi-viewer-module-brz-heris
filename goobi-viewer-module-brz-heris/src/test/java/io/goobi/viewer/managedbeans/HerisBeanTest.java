@@ -31,7 +31,6 @@ import org.junit.Test;
 import org.mockito.Mockito;
 
 import io.goobi.viewer.AbstractModuleSolrEnabledTest;
-import io.goobi.viewer.managedbeans.utils.BeanUtils;
 import io.goobi.viewer.model.security.user.User;
 import io.goobi.viewer.model.viewer.StringPair;
 
@@ -52,6 +51,8 @@ public class HerisBeanTest extends AbstractModuleSolrEnabledTest {
         FacesContext facesContext = ContextMocker.mockFacesContext();
         ExternalContext externalContext = Mockito.mock(ExternalContext.class);
         Mockito.when(facesContext.getExternalContext()).thenReturn(externalContext);
+        HttpServletRequest request = Mockito.mock(HttpServletRequest.class);
+        Mockito.when(externalContext.getRequest()).thenReturn(request);
     }
 
     /**
@@ -109,9 +110,8 @@ public class HerisBeanTest extends AbstractModuleSolrEnabledTest {
         bean.activeDocumentBean.setPersistentIdentifier(PI_KLEIUNIV);
         bean.activeDocumentBean.update();
         assertTrue(bean.activeDocumentBean.isRecordLoaded());
-        
-        HttpServletRequest request = Mockito.mock(HttpServletRequest.class);
-        Mockito.when(BeanUtils.getRequest()).thenReturn(request);
+
+        HttpServletRequest request = (HttpServletRequest) FacesContext.getCurrentInstance().getExternalContext().getRequest();
         Mockito.when(request.getHeader("PORTAL-SCHEME")).thenReturn(null);
         Mockito.when(request.getHeader("PORTAL-AUTHORITY")).thenReturn(null);
 
@@ -134,9 +134,8 @@ public class HerisBeanTest extends AbstractModuleSolrEnabledTest {
         bean.activeDocumentBean.setPersistentIdentifier(PI_KLEIUNIV);
         bean.activeDocumentBean.update();
         assertTrue(bean.activeDocumentBean.isRecordLoaded());
-        
-        HttpServletRequest request = Mockito.mock(HttpServletRequest.class);
-        Mockito.when(BeanUtils.getRequest()).thenReturn(request);
+
+        HttpServletRequest request = (HttpServletRequest) FacesContext.getCurrentInstance().getExternalContext().getRequest();
         Mockito.when(request.getHeader("PORTAL-SCHEME")).thenReturn("https");
         Assert.assertEquals("https", request.getHeader("PORTAL-SCHEME"));
         Mockito.when(request.getHeader("PORTAL-AUTHORITY")).thenReturn(null);
