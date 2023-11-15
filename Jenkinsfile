@@ -23,6 +23,13 @@ pipeline {
         recordIssues enabledForFailure: true, aggregatingResults: true, tools: [java(), javaDoc()]
       }
     }
+    stage('sonarcloud') {
+      steps {
+        withCredentials([string(credentialsId: 'jenkins-sonarcloud', variable: 'TOKEN')]) {
+          sh 'mvn -f goobi-viewer-module-*/pom.xml verify sonar:sonar -Dsonar.login=$TOKEN'
+        }
+      }
+    }
     stage('deployment of artifacts to maven repository') {
       when {
         anyOf {
