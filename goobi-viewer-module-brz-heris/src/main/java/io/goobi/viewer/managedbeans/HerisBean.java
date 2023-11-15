@@ -43,10 +43,10 @@ public class HerisBean implements Serializable {
     private static final Logger logger = LogManager.getLogger(HerisBean.class);
 
     @Inject
-    private ActiveDocumentBean activeDocumentBean;
+    ActiveDocumentBean activeDocumentBean;
 
     @Inject
-    private UserBean userBean;
+    UserBean userBean;
 
     /** Empty constructor. */
     public HerisBean() {
@@ -70,6 +70,11 @@ public class HerisBean implements Serializable {
     /**
      * 
      * @return
+     * @should return empty list if user not logged in
+     * @should return empty list if no record loaded
+     * @should return empty list if scheme param missing
+     * @should return empty list if authority param missing
+     * 
      */
     public List<StringPair> getExternalLinks() {
         if (!userBean.isLoggedIn() || !activeDocumentBean.isRecordLoaded()) {
