@@ -109,6 +109,11 @@ public class HerisBeanTest extends AbstractModuleSolrEnabledTest {
         bean.activeDocumentBean.setPersistentIdentifier(PI_KLEIUNIV);
         bean.activeDocumentBean.update();
         assertTrue(bean.activeDocumentBean.isRecordLoaded());
+        
+        HttpServletRequest request = Mockito.mock(HttpServletRequest.class);
+        Mockito.when(BeanUtils.getRequest()).thenReturn(request);
+        Mockito.when(request.getHeader("PORTAL-SCHEME")).thenReturn(null);
+        Mockito.when(request.getHeader("PORTAL-AUTHORITY")).thenReturn(null);
 
         List<StringPair> ret = bean.getExternalLinks();
         assertTrue(ret.isEmpty());
@@ -131,9 +136,10 @@ public class HerisBeanTest extends AbstractModuleSolrEnabledTest {
         assertTrue(bean.activeDocumentBean.isRecordLoaded());
         
         HttpServletRequest request = Mockito.mock(HttpServletRequest.class);
-        Mockito.when(request.getHeader("PORTAL-SCHEME")).thenReturn("https");
         Mockito.when(BeanUtils.getRequest()).thenReturn(request);
-        Assert.assertEquals("https", BeanUtils.getRequest().getHeader("PORTAL-SCHEME"));
+        Mockito.when(request.getHeader("PORTAL-SCHEME")).thenReturn("https");
+        Assert.assertEquals("https", request.getHeader("PORTAL-SCHEME"));
+        Mockito.when(request.getHeader("PORTAL-AUTHORITY")).thenReturn(null);
 
         List<StringPair> ret = bean.getExternalLinks();
         assertTrue(ret.isEmpty());
