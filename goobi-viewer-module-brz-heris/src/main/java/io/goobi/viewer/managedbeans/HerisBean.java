@@ -75,7 +75,7 @@ public class HerisBean implements Serializable {
      * @should return empty list if no record loaded
      * @should return empty list if scheme param missing
      * @should return empty list if authority param missing
-     * 
+     * @should return urls correctly
      */
     public List<StringPair> getExternalLinks() {
         if (!userBean.isLoggedIn() || !activeDocumentBean.isRecordLoaded()) {

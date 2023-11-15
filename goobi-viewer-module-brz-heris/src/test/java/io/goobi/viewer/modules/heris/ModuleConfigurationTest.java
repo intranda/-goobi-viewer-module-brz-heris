@@ -22,9 +22,10 @@ import org.junit.Test;
 import io.goobi.viewer.AbstractModuleTest;
 import io.goobi.viewer.controller.DataManager;
 import io.goobi.viewer.modules.HerisModule;
+import io.goobi.viewer.solr.SolrConstants;
 
 public class ModuleConfigurationTest extends AbstractModuleTest {
-    
+
     @BeforeClass
     public static void setUpClass() throws Exception {
         AbstractModuleTest.setUpClass();
@@ -45,7 +46,7 @@ public class ModuleConfigurationTest extends AbstractModuleTest {
      */
     @Test
     public void getIndexFieldForHost_shouldReturnCorrectValue() throws Exception {
-        Assert.assertEquals("MD_FOO_ID",
+        Assert.assertEquals(SolrConstants.PI,
                 ((HerisModule) DataManager.getInstance().getModule(HerisModule.ID)).getConfiguration().getIndexFieldForHost("example.com"));
     }
 

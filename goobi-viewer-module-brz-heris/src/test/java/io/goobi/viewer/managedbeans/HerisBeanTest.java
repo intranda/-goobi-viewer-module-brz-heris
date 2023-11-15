@@ -143,4 +143,31 @@ public class HerisBeanTest extends AbstractModuleSolrEnabledTest {
         List<StringPair> ret = bean.getExternalLinks();
         assertTrue(ret.isEmpty());
     }
+
+    /**
+     * @see HerisBean#getExternalLinks()
+     * @verifies return urls correctly
+     */
+    @Test
+    public void getExternalLinks_shouldReturnUrlsCorrectly() throws Exception {
+        bean.userBean = new UserBean();
+        bean.userBean.setUser(new User());
+        bean.userBean.getUser().setActive(true);
+        assertTrue(bean.userBean.isLoggedIn());
+
+        bean.activeDocumentBean = new ActiveDocumentBean();
+        bean.activeDocumentBean.setPersistentIdentifier(PI_KLEIUNIV);
+        bean.activeDocumentBean.update();
+        assertTrue(bean.activeDocumentBean.isRecordLoaded());
+
+        HttpServletRequest request = (HttpServletRequest) FacesContext.getCurrentInstance().getExternalContext().getRequest();
+        Mockito.when(request.getHeader("PORTAL-SCHEME")).thenReturn("https");
+        Assert.assertEquals("https", request.getHeader("PORTAL-SCHEME"));
+        Mockito.when(request.getHeader("PORTAL-AUTHORITY")).thenReturn("example.com");
+
+        List<StringPair> ret = bean.getExternalLinks();
+        assertFalse(ret.isEmpty());
+        Assert.assertEquals("https://example.com/" + PI_KLEIUNIV, ret.get(0).getOne());
+        Assert.assertEquals("https://example.com/" + PI_KLEIUNIV, ret.get(0).getTwo());
+    }
 }
