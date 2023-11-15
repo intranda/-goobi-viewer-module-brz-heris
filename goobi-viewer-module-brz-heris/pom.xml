@@ -9,7 +9,7 @@
 	<packaging>jar</packaging>
 
 
-	<name>Goobi viewer - Module Skeleton</name>
+	<name>Goobi viewer - Heris Module</name>
 	<url>https://github.com/intranda/goobi-viewer-module-heris</url>
 
 
@@ -48,20 +48,20 @@
 
     <repositories>
         <repository>
-            <id>intranda-internal</id>
-            <url>https://nexus.intranda.com/repository/maven-internal</url>
+            <id>intranda-releases</id>
+            <url>https://nexus.intranda.com/repository/maven-releases</url>
         </repository>
     </repositories>
 
 
     <distributionManagement>
         <repository>
-            <id>intranda-internal-releases</id>
-            <url>https://nexus.intranda.com/repository/maven-internal-releases</url>
+            <id>intranda-releases</id>
+            <url>https://nexus.intranda.com/repository/maven-releases</url>
         </repository>
         <snapshotRepository>
-            <id>intranda-internal-snapshots</id>
-            <url>https://nexus.intranda.com/repository/maven-internal-snapshots</url>
+            <id>intranda-snapshots</id>
+            <url>https://nexus.intranda.com/repository/maven-snapshots</url>
         </snapshotRepository>
     </distributionManagement>
 
