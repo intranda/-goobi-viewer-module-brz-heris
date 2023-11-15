@@ -16,6 +16,7 @@
 package io.goobi.viewer.modules.heris;
 
 import org.junit.Assert;
+import org.junit.BeforeClass;
 import org.junit.Test;
 
 import io.goobi.viewer.AbstractModuleTest;
@@ -23,6 +24,11 @@ import io.goobi.viewer.controller.DataManager;
 import io.goobi.viewer.modules.HerisModule;
 
 public class ModuleConfigurationTest extends AbstractModuleTest {
+    
+    @BeforeClass
+    public static void setUpClass() throws Exception {
+        AbstractModuleTest.setUpClass();
+    }
 
     /**
      * @see ModuleConfiguration#isModuleEnabled()

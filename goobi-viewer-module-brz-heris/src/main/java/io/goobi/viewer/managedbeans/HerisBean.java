@@ -57,10 +57,20 @@ public class HerisBean implements Serializable {
     public void init() {
     }
 
+    /**
+     * 
+     * @return
+     * @throws ModuleMissingException
+     * @should return correct value
+     */
     public boolean isModuleEnabled() throws ModuleMissingException {
         return HerisModule.getInstance().getConfiguration().isModuleEnabled();
     }
 
+    /**
+     * 
+     * @return
+     */
     public List<StringPair> getExternalLinks() {
         if (!userBean.isLoggedIn() || !activeDocumentBean.isRecordLoaded()) {
             return Collections.emptyList();
