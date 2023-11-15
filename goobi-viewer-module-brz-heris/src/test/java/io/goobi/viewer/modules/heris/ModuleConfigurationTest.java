@@ -50,6 +50,6 @@ public class ModuleConfigurationTest extends AbstractModuleTest {
     @Test
     public void getUrlPatternForHost_shouldReturnCorrectValue() throws Exception {
         Assert.assertEquals("{SCHEME}://{HOST}/{ID}",
-                ((HerisModule) DataManager.getInstance().getModule(HerisModule.ID)).getConfiguration().getIndexFieldForHost("example.com"));
+                ((HerisModule) DataManager.getInstance().getModule(HerisModule.ID)).getConfiguration().getUrlPatternForHost("example.com"));
     }
 }
