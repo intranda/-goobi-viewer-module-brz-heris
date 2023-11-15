@@ -109,6 +109,12 @@ public final class ModuleConfiguration extends AbstractConfiguration {
         return "";
     }
     
+    /**
+     * 
+     * @param host
+     * @return
+     * @should return correct value
+     */
     public String getUrlPatternForHost(String host) {
         List<HierarchicalConfiguration<ImmutableNode>> fieldList = getLocalConfigurationsAt("urlPatterns.pattern");
         if (fieldList != null) {
