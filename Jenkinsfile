@@ -2,8 +2,8 @@ pipeline {
 
   agent {
     docker {
-      image 'maven:3-jdk-11'
-      args '-v $HOME/.m2:/var/maven/.m2:z -u 1000 -ti -e _JAVA_OPTIONS=-Duser.home=/var/maven -e MAVEN_CONFIG=/var/maven/.m2'
+      image 'maven:3-eclipse-temurin-17'
+      args '-v $HOME/.m2:/var/maven/.m2:z -u 1000 -v $HOME/.config:/var/maven/.config -v $HOME/.sonar:/var/maven/.sonar -u 1000 -ti -e _JAVA_OPTIONS=-Duser.home=/var/maven -e MAVEN_CONFIG=/var/maven/.m2'
     }
   }
 
@@ -19,8 +19,15 @@ pipeline {
     }
     stage('build') {
       steps {
-        sh 'mvn -f goobi-viewer-module-*/pom.xml clean verify -U'
+        sh 'mvn -f goobi-viewer-module-*/pom.xml clean package -U'
         recordIssues enabledForFailure: true, aggregatingResults: true, tools: [java(), javaDoc()]
+      }
+    }
+    stage('sonarcloud') {
+      steps {
+        withCredentials([string(credentialsId: 'jenkins-sonarcloud', variable: 'TOKEN')]) {
+          sh 'mvn -f goobi-viewer-module-*/pom.xml verify sonar:sonar -Dsonar.token=$TOKEN'
+        }
       }
     }
     stage('deployment of artifacts to maven repository') {
@@ -36,9 +43,9 @@ pipeline {
   }
 
   post {
-    always {
-      junit "**/target/surefire-reports/*.xml"
-    }
+//    always {
+//      junit "**/target/surefire-reports/*.xml"
+//    }
     success {
       archiveArtifacts artifacts: '**/target/*.jar', fingerprint: true
     }
