@@ -82,7 +82,7 @@ public class HerisBean implements Serializable {
         if (!userBean.isLoggedIn() || !activeDocumentBean.isRecordLoaded()) {
             return Collections.emptyList();
         }
-        
+
         try {
             ModuleConfiguration config = (ModuleConfiguration) DataManager.getInstance().getModule(HerisModule.ID).getConfiguration();
 
@@ -96,8 +96,8 @@ public class HerisBean implements Serializable {
             // Use appropriate identifier in URL from configured Solr 
             List<StringPair> ret = new ArrayList<>();
             if (StringUtils.isNotEmpty(scheme) && StringUtils.isNotEmpty(authority)) {
-                String field = config.getIndexFieldForHost(authority);
-                String pattern = config.getUrlPatternForHost(authority);
+                String field = config.getIndexFieldForAuthority(authority);
+                String pattern = config.getUrlPatternForAuthority(authority);
                 logger.trace("field: {}", field);
                 logger.trace("pattern: {}", pattern);
                 if (StringUtils.isNotEmpty(field) && StringUtils.isNotEmpty(pattern)) {
@@ -109,11 +109,12 @@ public class HerisBean implements Serializable {
                         logger.trace("added {}", url);
                     }
                 } else {
-                    logger.warn("HERIS configuration incomplete for authority '{}'. Make sure pattern/text() and pattern/@field are not empty.", authority);
+                    logger.warn("HERIS configuration incomplete for authority '{}'. Make sure pattern/text() and pattern/@field are not empty.",
+                            authority);
                 }
 
             }
-            
+
             return ret;
         } catch (ModuleMissingException e) {
             logger.error(e.getMessage());

@@ -86,22 +86,22 @@ public class ModuleConfigurationTest extends AbstractModuleTest {
     }
 
     /**
-     * @see ModuleConfiguration#getIndexFieldForHost(String)
+     * @see ModuleConfiguration#getIndexFieldForAuthority(String)
      * @verifies return correct value
      */
     @Test
-    public void getIndexFieldForHost_shouldReturnCorrectValue() throws Exception {
+    public void getIndexFieldForAuthority_shouldReturnCorrectValue() throws Exception {
         assertEquals(SolrConstants.PI,
-                ((HerisModule) DataManager.getInstance().getModule(HerisModule.ID)).getConfiguration().getIndexFieldForHost("example.com"));
+                ((HerisModule) DataManager.getInstance().getModule(HerisModule.ID)).getConfiguration().getIndexFieldForAuthority("foo.example.com"));
     }
 
     /**
-     * @see ModuleConfiguration#getUrlPatternForHost(String)
+     * @see ModuleConfiguration#getUrlPatternForAuthority(String)
      * @verifies return correct value
      */
     @Test
-    public void getUrlPatternForHost_shouldReturnCorrectValue() throws Exception {
+    public void getUrlPatternForAuthority_shouldReturnCorrectValue() throws Exception {
         assertEquals("{SCHEME}://{HOST}/{ID}",
-                ((HerisModule) DataManager.getInstance().getModule(HerisModule.ID)).getConfiguration().getUrlPatternForHost("example.com"));
+                ((HerisModule) DataManager.getInstance().getModule(HerisModule.ID)).getConfiguration().getUrlPatternForAuthority("foo.example.com"));
     }
 }

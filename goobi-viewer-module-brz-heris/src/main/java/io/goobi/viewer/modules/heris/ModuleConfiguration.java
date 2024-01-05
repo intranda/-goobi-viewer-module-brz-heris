@@ -142,11 +142,11 @@ public final class ModuleConfiguration extends AbstractConfiguration {
      * @return Configured value; empty string if none found
      * @should return correct value
      */
-    public String getIndexFieldForHost(String host) {
+    public String getIndexFieldForAuthority(String authority) {
         List<HierarchicalConfiguration<ImmutableNode>> fieldList = getLocalConfigurationsAt("urlPatterns.pattern");
         if (fieldList != null) {
             for (HierarchicalConfiguration<ImmutableNode> subElement : fieldList) {
-                if (subElement.getString("[@host]").equals(host)) {
+                if (subElement.getString("[@authority]").equals(authority)) {
                     return subElement.getString("[@field]", "");
                 }
             }
@@ -161,11 +161,11 @@ public final class ModuleConfiguration extends AbstractConfiguration {
      * @return Configured value; empty string if none found
      * @should return correct value
      */
-    public String getUrlPatternForHost(String host) {
+    public String getUrlPatternForAuthority(String authority) {
         List<HierarchicalConfiguration<ImmutableNode>> fieldList = getLocalConfigurationsAt("urlPatterns.pattern");
         if (fieldList != null) {
             for (HierarchicalConfiguration<ImmutableNode> subElement : fieldList) {
-                if (subElement.getString("[@host]").equals(host)) {
+                if (subElement.getString("[@authority]").equals(authority)) {
                     return subElement.getString(".", "");
                 }
             }
