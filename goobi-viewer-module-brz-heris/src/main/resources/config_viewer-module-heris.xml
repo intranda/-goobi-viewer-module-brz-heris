@@ -6,7 +6,7 @@
        <propertyName>PORTAL-SCHEME</propertyName>
     </scheme>
 
-    <authority propertyType="header|attribute">
+    <authority propertyType="header">
         <propertyName>PORTAL-AUTHORITY</propertyName>
         <valueMappingList>
             <item authority="portal.bka.gv.at">heris.bka.example.com</item>

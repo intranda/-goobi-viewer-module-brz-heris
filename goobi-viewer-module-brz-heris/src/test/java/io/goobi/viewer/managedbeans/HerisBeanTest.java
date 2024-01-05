@@ -15,6 +15,7 @@
  */
 package io.goobi.viewer.managedbeans;
 
+import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 
@@ -24,15 +25,17 @@ import javax.faces.context.ExternalContext;
 import javax.faces.context.FacesContext;
 import javax.servlet.http.HttpServletRequest;
 
-import org.junit.Assert;
 import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
 import org.mockito.Mockito;
 
 import io.goobi.viewer.AbstractModuleSolrEnabledTest;
+import io.goobi.viewer.controller.DataManager;
 import io.goobi.viewer.model.security.user.User;
 import io.goobi.viewer.model.viewer.StringPair;
+import io.goobi.viewer.modules.HerisModule;
+import io.goobi.viewer.modules.heris.ModuleConfiguration;
 
 public class HerisBeanTest extends AbstractModuleSolrEnabledTest {
 
@@ -137,7 +140,7 @@ public class HerisBeanTest extends AbstractModuleSolrEnabledTest {
 
         HttpServletRequest request = (HttpServletRequest) FacesContext.getCurrentInstance().getExternalContext().getRequest();
         Mockito.when(request.getHeader("PORTAL-SCHEME")).thenReturn("https");
-        Assert.assertEquals("https", request.getHeader("PORTAL-SCHEME"));
+        assertEquals("https", request.getHeader("PORTAL-SCHEME"));
         Mockito.when(request.getHeader("PORTAL-AUTHORITY")).thenReturn(null);
 
         List<StringPair> ret = bean.getExternalLinks();
@@ -150,6 +153,10 @@ public class HerisBeanTest extends AbstractModuleSolrEnabledTest {
      */
     @Test
     public void getExternalLinks_shouldReturnUrlsCorrectly() throws Exception {
+        ModuleConfiguration config = (ModuleConfiguration) DataManager.getInstance().getModule(HerisModule.ID).getConfiguration();
+        config.overrideValue("authority[@propertyType]", "header");
+        assertEquals("header", config.getAuthorityPropertyType());
+
         bean.userBean = new UserBean();
         bean.userBean.setUser(new User());
         bean.userBean.getUser().setActive(true);
@@ -162,12 +169,12 @@ public class HerisBeanTest extends AbstractModuleSolrEnabledTest {
 
         HttpServletRequest request = (HttpServletRequest) FacesContext.getCurrentInstance().getExternalContext().getRequest();
         Mockito.when(request.getHeader("PORTAL-SCHEME-TEST")).thenReturn("https");
-        Assert.assertEquals("https", request.getHeader("PORTAL-SCHEME-TEST"));
+        assertEquals("https", request.getHeader("PORTAL-SCHEME-TEST"));
         Mockito.when(request.getHeader("PORTAL-AUTHORITY-TEST")).thenReturn("foo.example.com");
 
         List<StringPair> ret = bean.getExternalLinks();
         assertFalse(ret.isEmpty());
-        Assert.assertEquals("https://bar.example.com/" + PI_KLEIUNIV, ret.get(0).getOne());
-        Assert.assertEquals("https://bar.example.com/" + PI_KLEIUNIV, ret.get(0).getTwo());
+        assertEquals("https://bar.example.com/" + PI_KLEIUNIV, ret.get(0).getOne());
+        assertEquals("https://bar.example.com/" + PI_KLEIUNIV, ret.get(0).getTwo());
     }
 }
