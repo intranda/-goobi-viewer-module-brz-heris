@@ -2,6 +2,17 @@
 <config>
 	<enabled>true</enabled>
     
+    <scheme>
+       <propertyName>PORTAL-SCHEME-TEST</propertyName>
+    </scheme>
+
+    <authority propertyType="attribute">
+        <propertyName>PORTAL-AUTHORITY-TEST</propertyName>
+        <valueMappingList>
+            <item authority="foo.example.com">bar.example.com</item>
+        </valueMappingList>
+    </authority>
+    
     <urlPatterns>
         <pattern host="example.com" field="PI">{SCHEME}://{HOST}/{ID}</pattern>
     </urlPatterns>

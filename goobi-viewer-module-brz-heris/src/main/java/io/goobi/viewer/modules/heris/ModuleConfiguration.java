@@ -74,7 +74,7 @@ public final class ModuleConfiguration extends AbstractConfiguration {
 
     /**
      * 
-     * @return
+     * @return Configured value; false if none found
      * @should return correct value
      */
     public boolean isModuleEnabled() {
@@ -84,7 +84,7 @@ public final class ModuleConfiguration extends AbstractConfiguration {
     /**
      * 
      * @param type
-     * @return
+     * @return Configured values; empty list if none found
      */
     public List<String> getGuiContributions(String type) {
         return getLocalList("guiContributions." + type + ".url", new ArrayList<>());
@@ -92,8 +92,54 @@ public final class ModuleConfiguration extends AbstractConfiguration {
 
     /**
      * 
+     * @return Configured value; default value if none found
+     * @should return correct value
+     */
+    public String getSchemePropertyName() {
+        return getLocalString("scheme.propertyName", "PORTAL-SCHEME");
+    }
+
+    /**
+     * 
+     * @return Configured value; default value if none found
+     * @should return correct value
+     */
+    public String getAuthorityPropertyName() {
+        return getLocalString("authority.propertyName", "PORTAL-AUTHORITY");
+    }
+
+    /**
+     * 
+     * @return Configured value; default value if none found
+     * @should return correct value
+     */
+    public String getAuthorityPropertyType() {
+        return getLocalString("authority[@propertyType]", "header");
+    }
+
+    /**
+     * 
+     * @param authority
+     * @return Configured mapped value; original value if none found
+     * @should return correct value
+     */
+    public String getAuthorityMapping(String authority) {
+        List<HierarchicalConfiguration<ImmutableNode>> facetFields = getLocalConfigurationsAt("authority.valueMappingList.item");
+        if (facetFields != null && !facetFields.isEmpty()) {
+            for (HierarchicalConfiguration<ImmutableNode> fieldConfig : facetFields) {
+                if (authority.equals(fieldConfig.getString("[@authority]"))) {
+                    return fieldConfig.getString(".");
+                }
+            }
+        }
+        
+        return authority;
+    }
+
+    /**
+     * 
      * @param host
-     * @return
+     * @return Configured value; empty string if none found
      * @should return correct value
      */
     public String getIndexFieldForHost(String host) {
@@ -108,11 +154,11 @@ public final class ModuleConfiguration extends AbstractConfiguration {
 
         return "";
     }
-    
+
     /**
      * 
      * @param host
-     * @return
+     * @return Configured value; empty string if none found
      * @should return correct value
      */
     public String getUrlPatternForHost(String host) {

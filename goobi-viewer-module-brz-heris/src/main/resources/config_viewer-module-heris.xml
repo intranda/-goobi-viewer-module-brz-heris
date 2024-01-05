@@ -2,6 +2,19 @@
 <config>
 	<enabled>true</enabled>
     
+    <scheme>
+       <propertyName>PORTAL-SCHEME</propertyName>
+    </scheme>
+
+    <authority propertyType="header|attribute">
+        <propertyName>PORTAL-AUTHORITY</propertyName>
+        <valueMappingList>
+            <item authority="portal.bka.gv.at">heris.bka.example.com</item>
+            <item authority="portal.brz.gv.at">heris.bka.example.com</item>
+            <item authority="portal.bda.gv.at">heris.bda.example.com</item>
+        </valueMappingList>
+    </authority>
+    
     <urlPatterns>
         <pattern host="goobi.io" field="MD_FOO_ID">{SCHEME}://{HOST}/{ID}</pattern>
     </urlPatterns>

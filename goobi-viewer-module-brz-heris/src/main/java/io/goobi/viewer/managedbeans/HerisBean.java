@@ -56,6 +56,7 @@ public class HerisBean implements Serializable {
 
     @PostConstruct
     public void init() {
+        //
     }
 
     /**
@@ -81,39 +82,42 @@ public class HerisBean implements Serializable {
         if (!userBean.isLoggedIn() || !activeDocumentBean.isRecordLoaded()) {
             return Collections.emptyList();
         }
+        
+        try {
+            ModuleConfiguration config = (ModuleConfiguration) DataManager.getInstance().getModule(HerisModule.ID).getConfiguration();
 
-        // Get PORTAL-SCHEME + PORTAL-AUTHORITY from HTTP header
-        HttpServletRequest request = (HttpServletRequest) FacesContext.getCurrentInstance().getExternalContext().getRequest();
-        String scheme = request.getHeader("PORTAL-SCHEME");
-        String host = request.getHeader("PORTAL-AUTHORITY");
-        logger.trace("PORTAL-SCHEME: {}", scheme);
-        logger.trace("PORTAL-AUTHORITY: {}", host);
+            // Get PORTAL-SCHEME + PORTAL-AUTHORITY from HTTP header
+            HttpServletRequest request = (HttpServletRequest) FacesContext.getCurrentInstance().getExternalContext().getRequest();
+            String scheme = request.getHeader(config.getSchemePropertyName());
+            String authority = request.getHeader(config.getAuthorityPropertyName());
+            logger.trace("PORTAL-SCHEME: {}", scheme);
+            logger.trace("PORTAL-AUTHORITY: {}", authority);
 
-        // Use appropriate identifier in URL from configured Solr 
-        List<StringPair> ret = new ArrayList<>();
-        if (StringUtils.isNotEmpty(scheme) && StringUtils.isNotEmpty(host)) {
-            try {
-                ModuleConfiguration config = (ModuleConfiguration) DataManager.getInstance().getModule(HerisModule.ID).getConfiguration();
-                String field = config.getIndexFieldForHost(host);
-                String pattern = config.getUrlPatternForHost(host);
+            // Use appropriate identifier in URL from configured Solr 
+            List<StringPair> ret = new ArrayList<>();
+            if (StringUtils.isNotEmpty(scheme) && StringUtils.isNotEmpty(authority)) {
+                String field = config.getIndexFieldForHost(authority);
+                String pattern = config.getUrlPatternForHost(authority);
                 logger.trace("field: {}", field);
                 logger.trace("pattern: {}", pattern);
                 if (StringUtils.isNotEmpty(field) && StringUtils.isNotEmpty(pattern)) {
                     String identifier = activeDocumentBean.getViewManager().getTopStructElement().getMetadataValue(field);
                     if (StringUtils.isNotEmpty(identifier)) {
-                        String url = pattern.replace("{SCHEME}", scheme).replace("{HOST}", host).replace("{ID}", identifier);
+                        String targetHost = config.getAuthorityMapping(authority);
+                        String url = pattern.replace("{SCHEME}", scheme).replace("{HOST}", targetHost).replace("{ID}", identifier);
                         ret.add(new StringPair(url, url));
                         logger.trace("added {}", url);
                     }
                 } else {
-                    logger.warn("HERIS configuration incomplete for host '{}'. Make sure pattern/text() and pattern/@field are not empty.", host);
+                    logger.warn("HERIS configuration incomplete for authority '{}'. Make sure pattern/text() and pattern/@field are not empty.", authority);
                 }
 
-            } catch (ModuleMissingException e) {
-                logger.error(e.getMessage());
             }
+            
+            return ret;
+        } catch (ModuleMissingException e) {
+            logger.error(e.getMessage());
+            return Collections.emptyList();
         }
-
-        return ret;
     }
 }

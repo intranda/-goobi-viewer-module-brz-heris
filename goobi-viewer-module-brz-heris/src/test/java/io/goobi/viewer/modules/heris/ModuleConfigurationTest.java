@@ -15,6 +15,8 @@
  */
 package io.goobi.viewer.modules.heris;
 
+import static org.junit.Assert.assertEquals;
+
 import org.junit.Assert;
 import org.junit.BeforeClass;
 import org.junit.Test;
@@ -41,12 +43,55 @@ public class ModuleConfigurationTest extends AbstractModuleTest {
     }
 
     /**
+     * @see ModuleConfiguration#getSchemePropertyName()
+     * @verifies return correct value
+     */
+    @Test
+    public void getSchemePropertyName_shouldReturnCorrectValue() throws Exception {
+        assertEquals("PORTAL-SCHEME-TEST",
+                ((HerisModule) DataManager.getInstance().getModule(HerisModule.ID)).getConfiguration().getSchemePropertyName());
+    }
+
+    /**
+     * @see ModuleConfiguration#getAuthorityPropertyName()
+     * @verifies return correct value
+     */
+    @Test
+    public void getAuthorityPropertyName_shouldReturnCorrectValue() throws Exception {
+        assertEquals("PORTAL-AUTHORITY-TEST",
+                ((HerisModule) DataManager.getInstance().getModule(HerisModule.ID)).getConfiguration().getAuthorityPropertyName());
+    }
+
+    /**
+     * @see ModuleConfiguration#getAuthorityPropertyType()
+     * @verifies return correct value
+     */
+    @Test
+    public void getAuthorityPropertyType_shouldReturnCorrectValue() throws Exception {
+        assertEquals("attribute", ((HerisModule) DataManager.getInstance().getModule(HerisModule.ID)).getConfiguration().getAuthorityPropertyType());
+    }
+
+    /**
+     * @see ModuleConfiguration#getAuthorityMapping(String)
+     * @verifies return correct value
+     */
+    @Test
+    public void getAuthorityMapping_shouldReturnCorrectValue() throws Exception {
+        // Mapped value
+        assertEquals("bar.example.com",
+                ((HerisModule) DataManager.getInstance().getModule(HerisModule.ID)).getConfiguration().getAuthorityMapping("foo.example.com"));
+        // Unmapped value
+        assertEquals("bla.example.com",
+                ((HerisModule) DataManager.getInstance().getModule(HerisModule.ID)).getConfiguration().getAuthorityMapping("bla.example.com"));
+    }
+
+    /**
      * @see ModuleConfiguration#getIndexFieldForHost(String)
      * @verifies return correct value
      */
     @Test
     public void getIndexFieldForHost_shouldReturnCorrectValue() throws Exception {
-        Assert.assertEquals(SolrConstants.PI,
+        assertEquals(SolrConstants.PI,
                 ((HerisModule) DataManager.getInstance().getModule(HerisModule.ID)).getConfiguration().getIndexFieldForHost("example.com"));
     }
 
@@ -56,7 +101,7 @@ public class ModuleConfigurationTest extends AbstractModuleTest {
      */
     @Test
     public void getUrlPatternForHost_shouldReturnCorrectValue() throws Exception {
-        Assert.assertEquals("{SCHEME}://{HOST}/{ID}",
+        assertEquals("{SCHEME}://{HOST}/{ID}",
                 ((HerisModule) DataManager.getInstance().getModule(HerisModule.ID)).getConfiguration().getUrlPatternForHost("example.com"));
     }
 }

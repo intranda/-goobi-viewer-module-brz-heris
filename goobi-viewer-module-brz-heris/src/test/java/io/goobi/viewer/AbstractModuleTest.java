@@ -17,8 +17,6 @@ package io.goobi.viewer;
 
 import java.io.File;
 
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
 import org.junit.BeforeClass;
 
 import io.goobi.viewer.controller.DataManager;
@@ -27,12 +25,10 @@ import io.goobi.viewer.modules.heris.ModuleConfiguration;
 
 public abstract class AbstractModuleTest extends AbstractTest {
 
-    private static final Logger logger = LogManager.getLogger(AbstractModuleTest.class);
-    
     public static final String TEST_CONFIG_PATH = new File("src/test/resources/config_viewer-module-heris.test.xml").getAbsolutePath();
-    
+
     @BeforeClass
-    public static void setUpClass() throws Exception {  
+    public static void setUpClass() throws Exception {
         AbstractTest.setUpClass();
 
         // Register module in the core
