@@ -32,6 +32,7 @@ import org.apache.logging.log4j.Logger;
 
 import io.goobi.viewer.controller.DataManager;
 import io.goobi.viewer.exceptions.ModuleMissingException;
+import io.goobi.viewer.managedbeans.utils.BeanUtils;
 import io.goobi.viewer.model.viewer.StringPair;
 import io.goobi.viewer.modules.HerisModule;
 import io.goobi.viewer.modules.heris.ModuleConfiguration;
@@ -86,12 +87,21 @@ public class HerisBean implements Serializable {
         try {
             ModuleConfiguration config = (ModuleConfiguration) DataManager.getInstance().getModule(HerisModule.ID).getConfiguration();
 
-            // Get PORTAL-SCHEME + PORTAL-AUTHORITY from HTTP header
-            HttpServletRequest request = (HttpServletRequest) FacesContext.getCurrentInstance().getExternalContext().getRequest();
-            String scheme = request.getHeader(config.getSchemePropertyName());
-            String authority = request.getHeader(config.getAuthorityPropertyName());
-            logger.trace("PORTAL-SCHEME: {}", scheme);
-            logger.trace("PORTAL-AUTHORITY: {}", authority);
+            String scheme;
+            String authority;
+            if ("attribute".equals(config.getAuthorityPropertyType())) {
+                // Get scheme + authority from session attribute
+                scheme = (String) BeanUtils.getSession().getAttribute(config.getSchemePropertyName());
+                authority = (String) BeanUtils.getSession().getAttribute(config.getAuthorityPropertyName());
+            } else {
+                // Get scheme + authority from HTTP header
+                HttpServletRequest request = (HttpServletRequest) FacesContext.getCurrentInstance().getExternalContext().getRequest();
+                scheme = request.getHeader(config.getSchemePropertyName());
+                authority = request.getHeader(config.getAuthorityPropertyName());
+            }
+
+            logger.trace("scheme: {}", scheme);
+            logger.trace("authority: {}", authority);
 
             // Use appropriate identifier in URL from configured Solr 
             List<StringPair> ret = new ArrayList<>();
