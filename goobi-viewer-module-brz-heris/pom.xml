@@ -35,6 +35,7 @@
         <commons-io.version>2.15.1</commons-io.version>
         <commons-lang3.version>3.14.0</commons-lang3.version>
         <eclipselink.version>4.0.2</eclipselink.version>
+        <h2.version>1.4.200</h2.version>
 		<jakarta.annotation-api.version>1.3.5</jakarta.annotation-api.version>
 		<jakarta.persistence.version>3.1.0</jakarta.persistence.version>
 		<jakarta.servlet-api.version>4.0.4</jakarta.servlet-api.version>
@@ -169,6 +170,12 @@
         </dependency>
 
         <!-- Test dependencies -->
+        <dependency>
+            <groupId>com.h2database</groupId>
+            <artifactId>h2</artifactId>
+            <version>${h2.version}</version>
+            <scope>test</scope>
+        </dependency>
         <dependency>
             <groupId>org.junit.jupiter</groupId>
             <artifactId>junit-jupiter-api</artifactId>
