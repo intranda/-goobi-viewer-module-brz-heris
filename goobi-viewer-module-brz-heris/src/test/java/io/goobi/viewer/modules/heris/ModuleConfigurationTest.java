@@ -15,20 +15,20 @@
  */
 package io.goobi.viewer.modules.heris;
 
-import static org.junit.Assert.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
-import org.junit.Assert;
-import org.junit.BeforeClass;
-import org.junit.Test;
+import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.Test;
 
 import io.goobi.viewer.AbstractModuleTest;
 import io.goobi.viewer.controller.DataManager;
 import io.goobi.viewer.modules.HerisModule;
 import io.goobi.viewer.solr.SolrConstants;
 
-public class ModuleConfigurationTest extends AbstractModuleTest {
+class ModuleConfigurationTest extends AbstractModuleTest {
 
-    @BeforeClass
+    @BeforeAll
     public static void setUpClass() throws Exception {
         AbstractModuleTest.setUpClass();
     }
@@ -38,8 +38,8 @@ public class ModuleConfigurationTest extends AbstractModuleTest {
      * @verifies return correct value
      */
     @Test
-    public void isModuleEnabled_shouldReturnCorrectValue() throws Exception {
-        Assert.assertTrue(((HerisModule) DataManager.getInstance().getModule(HerisModule.ID)).getConfiguration().isModuleEnabled());
+    void isModuleEnabled_shouldReturnCorrectValue() throws Exception {
+        Assertions.assertTrue(((HerisModule) DataManager.getInstance().getModule(HerisModule.ID)).getConfiguration().isModuleEnabled());
     }
 
     /**
@@ -47,7 +47,7 @@ public class ModuleConfigurationTest extends AbstractModuleTest {
      * @verifies return correct value
      */
     @Test
-    public void getSchemePropertyName_shouldReturnCorrectValue() throws Exception {
+    void getSchemePropertyName_shouldReturnCorrectValue() throws Exception {
         assertEquals("PORTAL-SCHEME-TEST",
                 ((HerisModule) DataManager.getInstance().getModule(HerisModule.ID)).getConfiguration().getSchemePropertyName());
     }
@@ -57,7 +57,7 @@ public class ModuleConfigurationTest extends AbstractModuleTest {
      * @verifies return correct value
      */
     @Test
-    public void getAuthorityPropertyName_shouldReturnCorrectValue() throws Exception {
+    void getAuthorityPropertyName_shouldReturnCorrectValue() throws Exception {
         assertEquals("PORTAL-AUTHORITY-TEST",
                 ((HerisModule) DataManager.getInstance().getModule(HerisModule.ID)).getConfiguration().getAuthorityPropertyName());
     }
@@ -67,7 +67,7 @@ public class ModuleConfigurationTest extends AbstractModuleTest {
      * @verifies return correct value
      */
     @Test
-    public void getAuthorityPropertyType_shouldReturnCorrectValue() throws Exception {
+    void getAuthorityPropertyType_shouldReturnCorrectValue() throws Exception {
         assertEquals("attribute", ((HerisModule) DataManager.getInstance().getModule(HerisModule.ID)).getConfiguration().getAuthorityPropertyType());
     }
 
@@ -76,7 +76,7 @@ public class ModuleConfigurationTest extends AbstractModuleTest {
      * @verifies return correct value
      */
     @Test
-    public void getAuthorityMapping_shouldReturnCorrectValue() throws Exception {
+    void getAuthorityMapping_shouldReturnCorrectValue() throws Exception {
         // Mapped value
         assertEquals("bar.example.com",
                 ((HerisModule) DataManager.getInstance().getModule(HerisModule.ID)).getConfiguration().getAuthorityMapping("foo.example.com"));
@@ -90,7 +90,7 @@ public class ModuleConfigurationTest extends AbstractModuleTest {
      * @verifies return correct value
      */
     @Test
-    public void getIndexFieldForAuthority_shouldReturnCorrectValue() throws Exception {
+    void getIndexFieldForAuthority_shouldReturnCorrectValue() throws Exception {
         assertEquals(SolrConstants.PI,
                 ((HerisModule) DataManager.getInstance().getModule(HerisModule.ID)).getConfiguration().getIndexFieldForAuthority("foo.example.com"));
     }
@@ -100,7 +100,7 @@ public class ModuleConfigurationTest extends AbstractModuleTest {
      * @verifies return correct value
      */
     @Test
-    public void getUrlPatternForAuthority_shouldReturnCorrectValue() throws Exception {
+    void getUrlPatternForAuthority_shouldReturnCorrectValue() throws Exception {
         assertEquals("{SCHEME}://{HOST}/{ID}",
                 ((HerisModule) DataManager.getInstance().getModule(HerisModule.ID)).getConfiguration().getUrlPatternForAuthority("foo.example.com"));
     }

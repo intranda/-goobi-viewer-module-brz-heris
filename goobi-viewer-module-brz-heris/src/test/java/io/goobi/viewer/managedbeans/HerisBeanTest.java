@@ -15,9 +15,9 @@
  */
 package io.goobi.viewer.managedbeans;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertTrue;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import java.util.List;
 
@@ -25,9 +25,9 @@ import javax.faces.context.ExternalContext;
 import javax.faces.context.FacesContext;
 import javax.servlet.http.HttpServletRequest;
 
-import org.junit.Before;
-import org.junit.BeforeClass;
-import org.junit.Test;
+import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
 
 import io.goobi.viewer.AbstractModuleSolrEnabledTest;
@@ -37,16 +37,16 @@ import io.goobi.viewer.model.viewer.StringPair;
 import io.goobi.viewer.modules.HerisModule;
 import io.goobi.viewer.modules.heris.ModuleConfiguration;
 
-public class HerisBeanTest extends AbstractModuleSolrEnabledTest {
+class HerisBeanTest extends AbstractModuleSolrEnabledTest {
 
     HerisBean bean;
 
-    @BeforeClass
+    @BeforeAll
     public static void setUpClass() throws Exception {
         AbstractModuleSolrEnabledTest.setUpClass();
     }
 
-    @Before
+    @BeforeEach
     public void setUp() throws Exception {
         super.setUp();
         bean = new HerisBean();
@@ -63,7 +63,7 @@ public class HerisBeanTest extends AbstractModuleSolrEnabledTest {
      * @verifies return correct value
      */
     @Test
-    public void isModuleEnabled_shouldReturnCorrectValue() throws Exception {
+    void isModuleEnabled_shouldReturnCorrectValue() throws Exception {
         assertTrue(bean.isModuleEnabled());
     }
 
@@ -72,7 +72,7 @@ public class HerisBeanTest extends AbstractModuleSolrEnabledTest {
      * @verifies return empty list if user not logged in
      */
     @Test
-    public void getExternalLinks_shouldReturnEmptyListIfUserNotLoggedIn() throws Exception {
+    void getExternalLinks_shouldReturnEmptyListIfUserNotLoggedIn() throws Exception {
         bean.userBean = new UserBean();
         assertFalse(bean.userBean.isLoggedIn());
 
@@ -85,7 +85,7 @@ public class HerisBeanTest extends AbstractModuleSolrEnabledTest {
      * @verifies return empty list if no record loaded
      */
     @Test
-    public void getExternalLinks_shouldReturnEmptyListIfNoRecordLoaded() throws Exception {
+    void getExternalLinks_shouldReturnEmptyListIfNoRecordLoaded() throws Exception {
         bean.userBean = new UserBean();
         bean.userBean.setUser(new User());
         bean.userBean.getUser().setActive(true);
@@ -103,7 +103,7 @@ public class HerisBeanTest extends AbstractModuleSolrEnabledTest {
      * @verifies return empty list if scheme param missing
      */
     @Test
-    public void getExternalLinks_shouldReturnEmptyListIfSchemeParamMissing() throws Exception {
+    void getExternalLinks_shouldReturnEmptyListIfSchemeParamMissing() throws Exception {
         bean.userBean = new UserBean();
         bean.userBean.setUser(new User());
         bean.userBean.getUser().setActive(true);
@@ -127,7 +127,7 @@ public class HerisBeanTest extends AbstractModuleSolrEnabledTest {
      * @verifies return empty list if authority param missing
      */
     @Test
-    public void getExternalLinks_shouldReturnEmptyListIfAuthorityParamMissing() throws Exception {
+    void getExternalLinks_shouldReturnEmptyListIfAuthorityParamMissing() throws Exception {
         bean.userBean = new UserBean();
         bean.userBean.setUser(new User());
         bean.userBean.getUser().setActive(true);
@@ -152,7 +152,7 @@ public class HerisBeanTest extends AbstractModuleSolrEnabledTest {
      * @verifies return urls correctly
      */
     @Test
-    public void getExternalLinks_shouldReturnUrlsCorrectly() throws Exception {
+    void getExternalLinks_shouldReturnUrlsCorrectly() throws Exception {
         ModuleConfiguration config = (ModuleConfiguration) DataManager.getInstance().getModule(HerisModule.ID).getConfiguration();
         config.overrideValue("authority[@propertyType]", "header");
         assertEquals("header", config.getAuthorityPropertyType());

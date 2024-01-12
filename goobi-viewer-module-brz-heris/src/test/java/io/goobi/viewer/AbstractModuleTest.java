@@ -17,7 +17,7 @@ package io.goobi.viewer;
 
 import java.io.File;
 
-import org.junit.BeforeClass;
+import org.junit.jupiter.api.BeforeAll;
 
 import io.goobi.viewer.controller.DataManager;
 import io.goobi.viewer.modules.HerisModule;
@@ -27,7 +27,7 @@ public abstract class AbstractModuleTest extends AbstractTest {
 
     public static final String TEST_CONFIG_PATH = new File("src/test/resources/config_viewer-module-heris.test.xml").getAbsolutePath();
 
-    @BeforeClass
+    @BeforeAll
     public static void setUpClass() throws Exception {
         AbstractTest.setUpClass();
 

@@ -16,11 +16,10 @@
 package io.goobi.viewer;
 
 import org.apache.solr.client.solrj.impl.HttpSolrClient;
-import org.junit.After;
-import org.junit.AfterClass;
-import org.junit.Assert;
-import org.junit.Before;
-import org.junit.BeforeClass;
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.BeforeEach;
 
 import io.goobi.viewer.controller.DataManager;
 import io.goobi.viewer.solr.SolrSearchIndex;
@@ -35,13 +34,13 @@ public abstract class AbstractModuleSolrEnabledTest extends AbstractModuleTest {
 
     private HttpSolrClient client;
 
-    @BeforeClass
+    @BeforeAll
     public static void setUpClass() throws Exception {
         AbstractModuleTest.setUpClass();
 
     }
 
-    @Before
+    @BeforeEach
     public void setUp() throws Exception {
         client = SolrSearchIndex.getNewHttpSolrClient();
         DataManager.getInstance().injectSearchIndex(new SolrSearchIndex(client));
@@ -50,10 +49,10 @@ public abstract class AbstractModuleSolrEnabledTest extends AbstractModuleTest {
         if (iddocKleiuniv == -1) {
             iddocKleiuniv = DataManager.getInstance().getSearchIndex().getIddocFromIdentifier(PI_KLEIUNIV);
         }
-        Assert.assertNotEquals(0, iddocKleiuniv);
+        Assertions.assertNotEquals(0, iddocKleiuniv);
     }
 
-    @After
+    @AfterEach
     public void tearDown() throws Exception {
         client.close();
     }
