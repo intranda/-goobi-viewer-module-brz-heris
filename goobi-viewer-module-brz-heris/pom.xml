@@ -46,7 +46,7 @@
         <weld-servlet-shaded.version>3.1.9.Final</weld-servlet-shaded.version>
         
         <!-- Tests -->
-        <junit.version>5.9.1</junit.version>
+        <junit.version>5.10.1</junit.version>
         <mockito.version>5.10.0</mockito.version>
 	</properties>
 
@@ -183,6 +183,12 @@
             <scope>test</scope>
         </dependency>
         <dependency>
+			<groupId>org.junit.jupiter</groupId>
+			<artifactId>junit-jupiter</artifactId>
+			<version>${junit.version}</version>
+			<scope>test</scope>
+        </dependency>
+        <dependency>
             <groupId>org.mockito</groupId>
             <artifactId>mockito-core</artifactId>
             <version>${mockito.version}</version>
@@ -312,6 +318,9 @@
                             <ignoredUnusedDeclaredDependencies>
                                 <!-- JSTL is used within JSF for example c:forEach -->
                                 <ignoredUnusedDeclaredDependency>javax.servlet:jstl</ignoredUnusedDeclaredDependency>
+
+                                <!-- junit-jupiter is used to run the tests, otherwise it will fail in maven -->
+                                <ignoredUnusedDeclaredDependency>org.junit.jupiter:junit-jupiter</ignoredUnusedDeclaredDependency>
                             </ignoredUnusedDeclaredDependencies>
                         </configuration>
                     </execution>
