@@ -47,7 +47,7 @@
         
         <!-- Tests -->
         <junit.version>5.9.1</junit.version>
-        <mockito.version>5.8.0</mockito.version>
+        <mockito.version>5.10.0</mockito.version>
 	</properties>
 
 
