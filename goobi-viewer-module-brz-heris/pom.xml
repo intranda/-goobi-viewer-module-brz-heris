@@ -41,7 +41,7 @@
 		<jakarta.servlet-api.version>4.0.4</jakarta.servlet-api.version>
 		<javax.faces.version>2.4.0</javax.faces.version>
 		<json.version>20231013</json.version>
-		<log4j.version>2.22.0</log4j.version>
+		<log4j.version>2.22.1</log4j.version>
         <solr.version>8.11.2</solr.version>
         <weld-servlet-shaded.version>3.1.9.Final</weld-servlet-shaded.version>
         
