@@ -29,7 +29,7 @@
         <sonar.java.target>11</sonar.java.target>
 
 
-		<viewer-core.version>23.11-SNAPSHOT</viewer-core.version>
+		<viewer-core.version>24.01-SNAPSHOT</viewer-core.version>
 
 		<commons-configuration2.version>2.9.0</commons-configuration2.version>
         <commons-io.version>2.15.1</commons-io.version>
