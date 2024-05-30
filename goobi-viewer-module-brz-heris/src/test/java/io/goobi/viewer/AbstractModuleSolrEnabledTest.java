@@ -15,6 +15,7 @@
  */
 package io.goobi.viewer;
 
+import org.apache.solr.client.solrj.SolrClient;
 import org.apache.solr.client.solrj.impl.HttpSolrClient;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Assertions;
@@ -32,7 +33,7 @@ public abstract class AbstractModuleSolrEnabledTest extends AbstractModuleTest {
     protected static final String PI_KLEIUNIV = "PPN517154005";
     protected static long iddocKleiuniv = -1;
 
-    private HttpSolrClient client;
+    private SolrClient client;
 
     @BeforeAll
     public static void setUpClass() throws Exception {
@@ -42,7 +43,7 @@ public abstract class AbstractModuleSolrEnabledTest extends AbstractModuleTest {
 
     @BeforeEach
     public void setUp() throws Exception {
-        client = SolrSearchIndex.getNewHttpSolrClient();
+        client = SolrSearchIndex.getNewSolrClient();
         DataManager.getInstance().injectSearchIndex(new SolrSearchIndex(client));
 
         // Load current IDDOC for PPN517154005, which is used in many tests
